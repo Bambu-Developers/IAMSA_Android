@@ -30,7 +30,6 @@ android {
             buildConfigField "String", "COSTA_LINE_URL_BASE", '"http://201.131.2.102/ARS_WS/CitecWS_Venta.asmx"'
         }
     }
-
 }
 
 dependencies {
@@ -38,9 +37,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
-    implementation 'com.squareup.retrofit2:converter-simplexml:2.6.1'
+    implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.okhttp3:okhttp:4.2.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     implementation 'com.github.smart-fun:XmlToJson:1.4.5'

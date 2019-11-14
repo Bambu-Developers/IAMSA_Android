@@ -2,44 +2,33 @@ package com.grupo.iamsa.android.Models.DTO
 
 import com.google.gson.annotations.SerializedName
 import com.grupo.iamsa.android.Models.StringObject
-import org.simpleframework.xml.Element
-import org.simpleframework.xml.Namespace
-import org.simpleframework.xml.NamespaceList
-import org.simpleframework.xml.Root
 
-@Root(name = "soapenv:Envelope",strict = false)
-@NamespaceList(
-    Namespace(reference = "http://schemas.xmlsoap.org/soap/envelope/",prefix = "soapenv"),
-    Namespace(reference = "http://PortalMultiventaWS.org",prefix = "por")
-)
 data class RequestUserDTO (
-    @field:Element(name = "soapenv:Body")
+    @SerializedName( "soapenv:Body")
     var body: BodyRequestUserDTO = BodyRequestUserDTO(),
-    @field:Element(name = "soapenv:Header")
+    @SerializedName("soapenv:Header")
     var header:String = ""
 )
 
 data class BodyRequestUserDTO(
-    @field:Element(name = "por:LecturaInterlocutor")
+    @SerializedName( "por:LecturaInterlocutor")
     var user: UserRequestDTO = UserRequestDTO()
 )
 
 data class UserRequestDTO (
-    @field:Element(name = "por:Usuario")
+    @SerializedName( "por:Usuario")
     var usuario:String = "APPVJM",
-    @field:Element(name = "por:Password")
+    @SerializedName("por:Password")
     var password:String = "TESTVJM",
-    @field:Element(name = "por:Id_Indetificacion")
+    @SerializedName("por:Id_Indetificacion")
     var idIdentifier:String = "1",
-    @field:Element(name = "por:Indetificacion")
+    @SerializedName("por:Indetificacion")
     var indentificacion:String = "CNTS5UW1U",
-    @field:Element(name = "por:ID_MEMBRESIA")
+    @SerializedName( "por:ID_MEMBRESIA")
     var idMembership:String = "3000020946",
-    @field:Element(name = "por:_CORREO_ELEC")
+    @SerializedName( "por:_CORREO_ELEC")
     var email:String = "3000020946"
 )
-
-
 
 class ResponceUser(){
     @SerializedName("soap:Envelope")

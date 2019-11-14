@@ -14,19 +14,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         make_request.setOnClickListener {
-            AccountManager.loginUserName("APPVJM","TESTVJM") { responce,error ->
-                Log.e("Responce","Responce : ")
-            }
+            LocationManager.getOriginis()
         }
         make_request2.setOnClickListener {
-            var user = UserIAMSA()
-            user.motherName = "ramirez"
-            user.fatherName = "sanchez"
-            user.email = "omarr22r@adhotmadil.com"
-            user.name = "omar"
-            AccountManager.register(user) { responce ,error ->
-                Log.e("Responce","Responce : ")
-            }
+
         }
     }
 }

@@ -1,28 +1,35 @@
 package com.grupo.iamsa.android.Models.DTO
 
 import com.google.gson.annotations.SerializedName
-import org.simpleframework.xml.*
 
-@Root(name = "s:Envelope",strict = false)
-@NamespaceList(
-    Namespace(reference = "http://schemas.xmlsoap.org/soap/envelope/",prefix = "s"),
-    Namespace(reference = "http://citec.com/",prefix = "ns1"))
-data class RequestDTO (
-    @field:Element(name = "s:Body")
+
+class HeaderRequest{
+    @SerializedName("soap:Envelope")
+    var request: Any? = null
+
+}
+class RequestDTO {
+    @SerializedName("soap:Body")
     var body: BodyRequestDTO = BodyRequestDTO()
-)
+    @SerializedName("xmlns:xsi")
+    var xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    @SerializedName("xmlns:xsd")
+    var xsd = "http://www.w3.org/2001/XMLSchema"
+    @SerializedName("xmlns:soap")
+    var soap = "http://schemas.xmlsoap.org/soap/envelope/"
+}
 
 data class BodyRequestDTO(
-    @field:Element(name = "ns1:Origenes")
+    @SerializedName("Origenes")
     var origins: OriginisRequestDTO = OriginisRequestDTO()
 )
 
 data class OriginisRequestDTO(
-    @field:Element(name = "ns1:E_aEmpresaviaja")
+    @SerializedName("E_aEmpresaviaja")
     var empresaViaja:String = "ABA",
-    @field:Element(name = "ns1:E_aEsInternacional")
-    var isInternacional:Boolean = false,
-    @field:Element(name = "ns1:E_aEmpresaSolicita")
+    @SerializedName("E_aEsInternacional")
+    var isInternacional:Int = 0,
+    @SerializedName("E_aEmpresaSolicita")
     var empresaSolicita:String = "asd"
 )
 

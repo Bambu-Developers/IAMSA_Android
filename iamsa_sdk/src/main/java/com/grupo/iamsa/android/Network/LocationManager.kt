@@ -2,13 +2,14 @@ package com.grupo.iamsa.android.Network
 
 import android.util.Log
 import com.google.gson.Gson
+import com.grupo.iamsa.android.Models.DTO.HeaderRequest
 import com.grupo.iamsa.android.Models.DTO.RequestDTO
 import com.grupo.iamsa.android.Models.DTO.ResponceRoot
+import fr.arnaudguyon.xmltojsonlib.JsonToXml
 import fr.arnaudguyon.xmltojsonlib.XmlToJson
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import java.io.StringWriter
-import org.simpleframework.xml.core.Persister
 import java.io.IOException
 
 
@@ -20,12 +21,17 @@ object LocationManager: RequestManager(){
     fun getOriginis(){
         val requestBody = RequestDTO()
         requestBody.body.origins.empresaSolicita = "APAE"
-        requestBody.body.origins.isInternacional = false
         requestBody.body.origins.empresaViaja = "ARS"
 
-        val stringWriter = StringWriter()
-        val serializer = Persister()
-        serializer.write(requestBody, stringWriter)
+        var requestRoot = HeaderRequest()
+        requestRoot.request = requestBody
+        val jsonString = Gson().toJson(requestRoot)
+        val stringWriter =
+            JsonToXml.Builder(jsonString)
+                .forceAttribute("/soap:Envelope/xmlns:xsi")
+                .forceAttribute("/soap:Envelope/xmlns:xsd")
+                .forceAttribute("/soap:Envelope/xmlns:soap")
+                .build()
         Log.e("Responce","Responce : ${stringWriter.toString()}")
 
 

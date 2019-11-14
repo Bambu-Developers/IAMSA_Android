@@ -1,6 +1,9 @@
 package com.grupo.iamsa.android.Network
 
+import com.google.gson.Gson
+import com.grupo.iamsa.android.Models.DTO.HeaderRequest
 import com.grupo.iamsa.android.Network.API.APIMethod
+import fr.arnaudguyon.xmltojsonlib.JsonToXml
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -19,6 +22,18 @@ open class RequestManager() {
        return builder.build()
     }
 
+    fun getXMLRootRequest(requestBody:Any):String{
+        var requestRoot = HeaderRequest()
+        requestRoot.request = requestBody
+        val jsonString = Gson().toJson(requestRoot)
+        val stringWriter =
+            JsonToXml.Builder(jsonString)
+                .forceAttribute("/soap:Envelope/xmlns:xsi")
+                .forceAttribute("/soap:Envelope/xmlns:xsd")
+                .forceAttribute("/soap:Envelope/xmlns:soap")
+                .build()
+        return stringWriter.toString()
+    }
     fun getRequest(bodyString:String, method:APIMethod):Request{
         val mediaType = "charset=utf-8".toMediaTypeOrNull()
         val fullURL = aplicationType.url()+method.path()

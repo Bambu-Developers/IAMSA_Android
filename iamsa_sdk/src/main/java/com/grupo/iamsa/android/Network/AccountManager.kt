@@ -7,11 +7,10 @@ import com.grupo.iamsa.android.Models.DTO.*
 import com.grupo.iamsa.android.Network.API.APIMethod
 import fr.arnaudguyon.xmltojsonlib.XmlToJson
 import okhttp3.*
-import org.simpleframework.xml.core.Persister
 import java.io.IOException
-import java.io.StringWriter
 
 object AccountManager :RequestManager(){
+
 
     fun loginEmail(email:String, pass:String,callResponce:(user: LecturaInterlocutorResultDTO?, error:String?) -> Unit){
         val requestBody = RequestUserDTO()
@@ -19,23 +18,16 @@ object AccountManager :RequestManager(){
         requestBody.body.user.email = email
         requestBody.body.user.idIdentifier = "1"
         requestBody.body.user.indentificacion = "CNTS5UW1U"
-        val stringWriter = StringWriter()
-        val serializer = Persister()
-        serializer.write(requestBody, stringWriter)
-        Log.e("Request","Request Body : ${stringWriter.toString()}")
-        login(stringWriter.toString(),callResponce)
+        login(getXMLRootRequest(requestBody),callResponce)
     }
+
     fun loginMembetship(idMembership:String, pass:String,callResponce:(user: LecturaInterlocutorResultDTO?, error:String?) -> Unit){
         val requestBody = RequestUserDTO()
         requestBody.body.user.password = pass
         requestBody.body.user.idMembership = idMembership
         requestBody.body.user.idIdentifier = "1"
         requestBody.body.user.indentificacion = "CNTS5UW1U"
-        val stringWriter = StringWriter()
-        val serializer = Persister()
-        serializer.write(requestBody, stringWriter)
-        Log.e("Request","Request Body : ${stringWriter.toString()}")
-        login(stringWriter.toString(),callResponce)
+        login(getXMLRootRequest(requestBody),callResponce)
     }
     fun loginUserName(user:String, pass:String,callResponce:(user: LecturaInterlocutorResultDTO?, error:String?) -> Unit){
         val requestBody = RequestUserDTO()
@@ -43,11 +35,8 @@ object AccountManager :RequestManager(){
         requestBody.body.user.password = pass
         requestBody.body.user.idIdentifier = "1"
         requestBody.body.user.indentificacion = "CNTS5UW1U"
-        val stringWriter = StringWriter()
-        val serializer = Persister()
-        serializer.write(requestBody, stringWriter)
-        Log.e("Request","Request Body : ${stringWriter.toString()}")
-        login(stringWriter.toString(),callResponce)
+        login(getXMLRootRequest(requestBody),callResponce)
+
     }
     private fun login(body:String,callResponce:(user: LecturaInterlocutorResultDTO?, error:String?) -> Unit){
 
@@ -84,11 +73,7 @@ object AccountManager :RequestManager(){
         requestBody.body.user.datos.maternal = user.motherName
         requestBody.body.user.datos.paternal = user.fatherName
         requestBody.body.user.datos.name = user.name
-        val stringWriter = StringWriter()
-        val serializer = Persister()
-        serializer.write(requestBody, stringWriter)
-        Log.e("Request","Request Body : ${stringWriter.toString()}")
-        return stringWriter.toString()
+        return getXMLRootRequest(requestBody)
     }
 
     fun register(user:UserIAMSA,callResponce:(user: ResgisterResponceData?,error:String?) -> Unit){
@@ -121,4 +106,5 @@ object AccountManager :RequestManager(){
             }
         })
     }
+
 }
