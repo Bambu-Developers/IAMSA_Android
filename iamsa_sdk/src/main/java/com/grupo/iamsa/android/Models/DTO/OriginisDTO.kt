@@ -2,21 +2,21 @@ package com.grupo.iamsa.android.Models.DTO
 
 import com.google.gson.annotations.SerializedName
 
-
-class HeaderRequest{
-    @SerializedName("soap:Envelope")
-    var request: Any? = null
-
-}
 class RequestDTO {
     @SerializedName("soap:Body")
     var body: BodyRequestDTO = BodyRequestDTO()
     @SerializedName("xmlns:xsi")
-    var xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    val xsi = "http://www.w3.org/2001/XMLSchema-instance"
     @SerializedName("xmlns:xsd")
-    var xsd = "http://www.w3.org/2001/XMLSchema"
+    val xsd = "http://www.w3.org/2001/XMLSchema"
     @SerializedName("xmlns:soap")
-    var soap = "http://schemas.xmlsoap.org/soap/envelope/"
+    val soap = "http://schemas.xmlsoap.org/soap/envelope/"
+
+    @SerializedName("xmlns:soapenv")
+    val soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+
+    @SerializedName("xmlns:por")
+    val por = "http://PortalMultiventaWS.org"
 }
 
 data class BodyRequestDTO(

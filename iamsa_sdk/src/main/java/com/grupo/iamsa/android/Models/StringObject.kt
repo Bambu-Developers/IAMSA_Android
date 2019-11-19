@@ -10,3 +10,13 @@ class StringObject {
     @SerializedName("content")
     var value: String? = null
 }
+
+class IntObject {
+
+    @SerializedName("xmlns")
+    var xml: String? = null
+
+    @SerializedName("content")
+    var value: Int? = null
+}
+

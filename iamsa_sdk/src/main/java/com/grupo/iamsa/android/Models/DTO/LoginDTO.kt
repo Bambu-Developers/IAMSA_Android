@@ -1,52 +1,65 @@
 package com.grupo.iamsa.android.Models.DTO
 
 import com.google.gson.annotations.SerializedName
+import com.grupo.iamsa.android.Models.IAMSAModel
 import com.grupo.iamsa.android.Models.StringObject
 
-data class RequestUserDTO (
-    @SerializedName( "soapenv:Body")
-    var body: BodyRequestUserDTO = BodyRequestUserDTO(),
+class RequestUserDTO: IAMSAModel() {
+    @SerializedName("soapenv:Body")
+    var body: BodyRequestUserDTO = BodyRequestUserDTO()
+
     @SerializedName("soapenv:Header")
-    var header:String = ""
-)
+    var header: String = ""
+
+    @SerializedName("xmlns:soapenv")
+    val soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+
+    @SerializedName("xmlns:por")
+    val por = "http://PortalMultiventaWS.org"
+}
 
 data class BodyRequestUserDTO(
     @SerializedName( "por:LecturaInterlocutor")
     var user: UserRequestDTO = UserRequestDTO()
-)
+): IAMSAModel()
 
-data class UserRequestDTO (
+class UserRequestDTO: IAMSAModel()  {
     @SerializedName( "por:Usuario")
-    var usuario:String = "APPVJM",
+    private var usuario:String = "APPVJM"
     @SerializedName("por:Password")
-    var password:String = "TESTVJM",
+    private var password:String = "TESTVJM"
     @SerializedName("por:Id_Indetificacion")
-    var idIdentifier:String = "1",
-    @SerializedName("por:Indetificacion")
-    var indentificacion:String = "CNTS5UW1U",
-    @SerializedName( "por:ID_MEMBRESIA")
-    var idMembership:String = "3000020946",
-    @SerializedName( "por:_CORREO_ELEC")
-    var email:String = "3000020946"
-)
+    private var idIdentifier:String = "1"
 
-class ResponceUser(){
+    @SerializedName("por:Indetificacion")
+    var indentificacion:String = ""
+    @SerializedName( "por:ID_MEMBRESIA")
+    var idMembership:String = ""
+    @SerializedName( "por:_CORREO_ELEC")
+    var email:String = ""
+}
+
+class ResponceUser(): IAMSAModel() {
     @SerializedName("soap:Envelope")
     var responce: UserResponceDTO?=null
 }
 data class UserResponceDTO (
     @SerializedName(  "soap:Body")
-    var body: UserResponceBodyDTO? = null)
+    var body: UserResponceBodyDTO? = null
+): IAMSAModel()
+
 
 data class UserResponceBodyDTO (
     @SerializedName("LecturaInterlocutorResponse")
-    var responce: LecturaInterlocutorResponseDTO? = null)
+    var responce: LecturaInterlocutorResponseDTO? = null
+) :IAMSAModel()
 
 data class LecturaInterlocutorResponseDTO (
     @SerializedName("LecturaInterlocutorResult")
-    var result: LecturaInterlocutorResultDTO? = null)
+    var result: LecturaInterlocutorResultDTO? = null
+): IAMSAModel()
 
-class LecturaInterlocutorResultDTO() {
+class LecturaInterlocutorResultDTO(): IAMSAModel()  {
     @SerializedName("APELLIDO_MATERNO")
     var maternal: StringObject? = null
     @SerializedName("APELLIDO_PATERNO")
