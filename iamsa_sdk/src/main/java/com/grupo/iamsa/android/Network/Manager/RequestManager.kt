@@ -13,7 +13,7 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import java.util.concurrent.TimeUnit
 
-open class RequestManager() {
+open class RequestManager {
 
     fun getCall(body: IAMSAModel, method:APIMethod): Call {
         val rootRequest = getXMLRootRequest(body,method)
