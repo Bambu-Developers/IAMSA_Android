@@ -37,7 +37,7 @@ open class RequestManager {
                 val body = addNameSpace(Gson().toJson(viajamas),method)
                 return body
             }
-            APIMethod.register -> {
+            APIMethod.register,APIMethod.myTickes -> {
                 val viajamas  = HeaderViajamas()
                 viajamas.request = requestBody
                 var jsonRep = viajamas.toJSON()
@@ -51,6 +51,7 @@ open class RequestManager {
         val stringWriter = JsonToXml.Builder(jsonString)
                     .forceAttribute("/soapenv:Envelope/xmlns:soapenv")
                     .forceAttribute("/soapenv:Envelope/xmlns:por")
+                    .forceAttribute("/soapenv:Envelope/xmlns:cit")
                     .build()
         return stringWriter.toString()
     }
@@ -59,6 +60,9 @@ open class RequestManager {
         when(method){
             APIMethod.register,APIMethod.login,APIMethod.recoverAccount,APIMethod.chanePassword-> {
               return  BuildConfig.aplicationType.urlViajaMas()
+            }
+            APIMethod.myTickes -> {
+                return BuildConfig.aplicationType.urlProfile()
             }
         }
     }

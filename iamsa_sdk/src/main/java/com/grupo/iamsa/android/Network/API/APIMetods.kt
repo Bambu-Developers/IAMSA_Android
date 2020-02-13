@@ -12,11 +12,14 @@ enum class APIMethod {
     recoverAccount {
         override fun SOAPAction(): String { return "http://PortalMultiventaWS.org/RecuperacionContrasena" }
     },
+
     chanePassword {
         override fun SOAPAction(): String { return "http://PortalMultiventaWS.org/getCambioContrasena" }
+    },
+
+    myTickes {
+        override fun SOAPAction(): String { return "http://citec.com/ICitecWS_Venta/ProgramaMiViaje"}
     };
-
-
 
     abstract fun SOAPAction():String
 }

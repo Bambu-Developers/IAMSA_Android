@@ -18,7 +18,6 @@ object AccountManager : RequestManager(){
         requestBody.body.user.indentificacion = pass
         login(requestBody, callResponce)
     }
-
     fun loginMembetship(idMembership:String, pass:String,callResponce:(user: LecturaInterlocutorResultDTO?, error:String?) -> Unit){
         val requestBody = RequestUserDTO()
         login(requestBody,callResponce)
@@ -27,7 +26,6 @@ object AccountManager : RequestManager(){
         val requestBody = RequestUserDTO()
         login(requestBody,callResponce)
     }
-
     private fun login(body:IAMSAModel,callResponce:(user: LecturaInterlocutorResultDTO?, error:String?) -> Unit){
         getCall(body,APIMethod.login).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -52,7 +50,6 @@ object AccountManager : RequestManager(){
             }
         })
     }
-
     fun getRegisterDTO(user:UserIAMSA):IAMSAModel {
         val requestBody = RequestRegisterDTO()
         val datosUser = UserRegisterDataDTO()
@@ -63,7 +60,6 @@ object AccountManager : RequestManager(){
         requestBody.body.user.datos = datosUser
         return requestBody
     }
-
     fun register(user:UserIAMSA,callResponce:(user: ResgisterResponceData?,error:String?) -> Unit){
         getCall(getRegisterDTO(user),APIMethod.register).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -93,8 +89,6 @@ object AccountManager : RequestManager(){
             }
         })
     }
-
-
     fun changePassword(lastPass:String,newPass:String,email:String,callResponce:(user: ChangePasswordResponceData?,error:String?) -> Unit){
         val requestBody = RequestChangePasswordDTO()
         requestBody.body.data.correo = email
@@ -147,6 +141,33 @@ object AccountManager : RequestManager(){
                     }
                 } else {
                     callResponce.invoke(null,response.message)
+                }
+            }
+        })
+    }
+
+    fun getMyTickes(email:String,callResponce:(itinerarios: ArrayList<CorridaTransbordo>,error:String?) -> Unit){
+        val requestBody = MyTicketsRequestDTO()
+        requestBody.body.data.email = email
+        getCall(requestBody,APIMethod.myTickes).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("Error","Error Request")
+                callResponce.invoke(ArrayList<CorridaTransbordo>(),e.toString())
+            }
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful){
+                    val resBody = response.body?.string() ?: ""
+                    Log.e("isSuccessful","onResponse $resBody")
+                    val json = XmlToJson.Builder(resBody).build().toJson()
+                    try {
+                        val responceUser = Gson().fromJson(json.toString(), MyTicketsResponce::class.java)
+                        callResponce.invoke(responceUser.responce?.body?.responce?.result?.programaMiViaje?.itinerarios?.corridasTransbordos ?: ArrayList<CorridaTransbordo>(),null)
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                        callResponce.invoke(ArrayList<CorridaTransbordo>(),"Cant not cast the responce")
+                    }
+                } else {
+                    callResponce.invoke(ArrayList<CorridaTransbordo>(),response.message)
                 }
             }
         })

@@ -27,13 +27,8 @@ class MainActivity : AppCompatActivity() {
             */
         }
         make_request2.setOnClickListener {
-            var user = UserIAMSA()
-            user.motherName = "ramirez"
-            user.fatherName = "sanchez"
-            user.email = "rswomarrrrs@ciencias.unam.mx"
-            user.name = "omar"
-            AccountManager.register(user) { responce ,error ->
-                Log.e("Responce","Responce :${responce.toString()} ")
+            AccountManager.getMyTickes("recknier@gmail.com") { responce, error ->
+                Log.e("Test","Responce Error")
             }
         }
     }

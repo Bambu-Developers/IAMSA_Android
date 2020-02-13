@@ -13,7 +13,7 @@ class ExampleUnitTest {
 
     @Test
     fun addition_isCorrect() {
-        AccountManager.loginUserName("APPVJM","TESTVJM") { responce, error ->
+        AccountManager.getMyTickes("CARLOS@BAMBU-MOBILE.COM") { responce, error ->
             Log.e("Test","Responce Error")
         }
     }
